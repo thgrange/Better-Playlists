@@ -1,48 +1,34 @@
-import React, { useState } from "react";
-import LoginService from "../Services/LoginService";
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import LoginService from '../Services/LoginService';
 
-function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+const LoginPage = () => {
+    const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      await LoginService.login(email, password);
-      // Rediriger l'utilisateur vers la page d'accueil ou autre endroit
-      // après la connexion réussie
-    } catch (error) {
-      setError("Adresse email ou mot de passe incorrect");
+    const goToHomePage = () => {
+        navigate("/");
     }
-  };
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Adresse email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
+    useEffect(() => {
+        var query = window.location.hash;
+
+        if (query.indexOf("#") === 0) {
+            query = query.slice(1);
+        }
+
+        const queryParameters = new URLSearchParams(query)
+        const accessToken = queryParameters.get("access_token");
+        const expiresIn = queryParameters.get("expires_in");
+
+        LoginService.login(accessToken, expiresIn, goToHomePage);
+    })
+
+    return (
+        <div className='d-flex container-fluid vh-100 vw-100'>
+            <div className="spinner-border m-auto text-primary" role="status">
+            </div>
         </div>
-        <div>
-          <label htmlFor="password">Mot de passe:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
-        {error && <div>{error}</div>}
-        <button type="submit">Connexion</button>
-      </form>
-    </div>
-  );
+    );
 }
 
 export default LoginPage;

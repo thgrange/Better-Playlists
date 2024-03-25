@@ -1,25 +1,24 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import ProfileService from '../Services/ProfileService';
+import ProfilePreview from '../Components/ProfilePreview';
+import SpotifyPlayer from '../Components/SpotifyPlayer';
 
 const HomePage = () => {
-    const [userProfile, setUserProfile] = useState(null);
+    const [profile, setProfile] = useState({
+        display_name: ""
+    });
 
-    const handleProfileClick = () => {
-        // code pour accéder au profil de l'utilisateur
-    };
+    useEffect(() => {
+        ProfileService.getConnectedUser().then((response) => {
+            if (response.status === 200) {
+                setProfile(response.data);
+            }
+        });
+    }, []);
 
     return (
-        <div>
-            <header>
-                <nav>
-                    <Link to="/profile">
-                        <button>Profil</button>
-                    </Link>
-                </nav>
-            </header>
-            <main>
-                {/* Contenu de la page */}
-            </main>
+        <div className='d-flex container-fluid flex-column'>
+            <ProfilePreview profile={profile} />
         </div>
     );
 };
