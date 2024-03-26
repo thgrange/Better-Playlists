@@ -1,36 +1,36 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Repos\\0 TOUT\\0tout.Back\\ExternalServices\\ExternalServices.csproj": {}
+    "C:\\Repos\\Better Playlists\\0tout.Back\\ExternalServices\\ExternalServices.csproj": {}
   },
   "projects": {
-    "C:\\Repos\\0 TOUT\\0tout.Back\\ExternalServices\\ExternalServices.csproj": {
+    "C:\\Repos\\Better Playlists\\0tout.Back\\ExternalServices\\ExternalServices.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Repos\\0 TOUT\\0tout.Back\\ExternalServices\\ExternalServices.csproj",
+        "projectUniqueName": "C:\\Repos\\Better Playlists\\0tout.Back\\ExternalServices\\ExternalServices.csproj",
         "projectName": "ExternalServices",
-        "projectPath": "C:\\Repos\\0 TOUT\\0tout.Back\\ExternalServices\\ExternalServices.csproj",
-        "packagesPath": "C:\\Users\\scrii\\.nuget\\packages\\",
-        "outputPath": "C:\\Repos\\0 TOUT\\0tout.Back\\ExternalServices\\obj\\",
+        "projectPath": "C:\\Repos\\Better Playlists\\0tout.Back\\ExternalServices\\ExternalServices.csproj",
+        "packagesPath": "C:\\Users\\ThomasGRANGE\\.nuget\\packages\\",
+        "outputPath": "C:\\Repos\\Better Playlists\\0tout.Back\\ExternalServices\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\scrii\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ThomasGRANGE\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "net7.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
+          "net7.0": {
+            "targetAlias": "net7.0",
             "projectReferences": {}
           }
         },
@@ -38,11 +38,16 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net7.0": {
+          "targetAlias": "net7.0",
           "imports": [
             "net461",
             "net462",
@@ -59,7 +64,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

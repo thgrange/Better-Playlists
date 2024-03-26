@@ -8,4 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ExternalServices
-build_property.ProjectDir = C:\Repos\0 TOUT\0tout.Back\ExternalServices\
+build_property.ProjectDir = C:\Repos\Better Playlists\0tout.Back\ExternalServices\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
