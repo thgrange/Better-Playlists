@@ -8,16 +8,17 @@ import * as Icons from "@fortawesome/fontawesome-free-solid";
 import * as Icons2 from "@fortawesome/free-solid-svg-icons";
 import PlaylistsPage from "./Pages/PlaylistsPage";
 
-const iconList = Object.keys(Icons)
+var iconList = Object.keys(Icons)
 	.filter((key) => key !== "fas" && key !== "prefix")
 	.map((icon) => Icons[icon]);
 
-const icon2List = Object.keys(Icons2)
+fontawesome.library.add(...iconList);
+
+iconList = Object.keys(Icons2)
 	.filter((key) => key !== "fas" && key !== "prefix")
 	.map((icon) => Icons2[icon]);
 
 fontawesome.library.add(...iconList);
-fontawesome.library.add(...icon2List);
 
 function App() {
 	return (

@@ -3,15 +3,15 @@ import SpotifyPlayer from "./SpotifyPlayer";
 
 const Footer = () => {
 	return (
-		<Navbar
-			className="bg-dark justify-content-between"
+		<div
+			className="bg-dark container vw-100 mw-100"
 			style={{
 				height: "120px",
+				sticky: "bottom"
 			}}
-			sticky="bottom"
 		>
-			<SpotifyPlayer></SpotifyPlayer>
-		</Navbar>
+			<SpotifyPlayer />
+		</div>
 	);
 };
 

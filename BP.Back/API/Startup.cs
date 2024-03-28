@@ -5,12 +5,12 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Services.Interfaces;
-using Services.Services;
 using Database.Models;
 using Microsoft.EntityFrameworkCore;
 using Database.Interfaces;
 using Database.Repositories;
+using Services.Security;
+using ExternalServices.Spotify;
 
 namespace API
 {
@@ -35,8 +35,10 @@ namespace API
             //Changer la méthode d'injection de dépendance en modules
 
             services.AddScoped<ISecurityService, SecurityService>();
+
+            services.AddScoped<ISpotifyService, SpotifyService>();
             
-            services.AddScoped<IZeroUnitOfWork, ZeroUnitOfWork>();
+            services.AddScoped<IBPUnitOfWork, BPUnitOfWork>();
 
             services.AddAuthentication(authOptions => 
             {
@@ -59,10 +61,10 @@ namespace API
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder.WithOrigins("*"));
+                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
 
-            services.AddDbContext<ZeroContext>(options =>
+            services.AddDbContext<BPContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Database")));
         }
 
@@ -73,12 +75,12 @@ namespace API
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseCors("AllowSpecificOrigin");
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
-            app.UseCors("AllowSpecificOrigin");
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

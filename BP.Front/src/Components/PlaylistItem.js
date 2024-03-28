@@ -33,7 +33,7 @@ const PlaylistItem = (props) => {
                 }}
             >
                 <div
-                    className="rounded-circle border-4 overflow-hidden"
+                    className="border-4 overflow-hidden"
                     style={{
                         height: "120px",
                         width: "120px",

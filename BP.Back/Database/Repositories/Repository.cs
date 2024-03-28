@@ -6,10 +6,10 @@ namespace Database.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected readonly ZeroContext _context;
+        protected readonly BPContext _context;
         protected DbSet<T> _entities;
 
-        public Repository(ZeroContext context)
+        public Repository(BPContext context)
         {
             _context = context;
             _entities = context.Set<T>();

@@ -6,8 +6,7 @@ using Database.Repositories;
 
 namespace Database.Interfaces
 {
-    public interface IZeroUnitOfWork
+    public interface IBPUnitOfWork
     {
-        UserRepository UserRepository { get; }
     }
 }

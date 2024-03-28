@@ -3,10 +3,9 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Services.Interfaces;
 using System.Security.Cryptography;
 
-namespace Services.Services
+namespace Services.Security
 {
     public class SecurityService : ISecurityService
     {

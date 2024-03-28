@@ -1,16 +1,25 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LoginService from "../Services/LoginService";
 import BPicon from "../Content/BPicon.png";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Container, Navbar, Nav, Offcanvas } from "react-bootstrap";
 
 const Header = (props) => {
+	const navigate = useNavigate();
 	const goToHomePage = () => {
 		window.location.reload(false);
 	};
 
 	function logout() {
 		LoginService.logout(goToHomePage);
+	}
+
+	function goToPlaylists() {
+		navigate("/playlists");
+	}
+
+	function goToProfile() {
+		navigate("/");
 	}
 
 	const location = useLocation();
@@ -25,7 +34,7 @@ const Header = (props) => {
 				height: "70px",
 			}}
 		>
-			<Navbar.Brand href="/">
+			<Navbar.Brand onClick={goToProfile}>
 				<img
 					src={BPicon}
 					className="ms-1"
@@ -52,13 +61,13 @@ const Header = (props) => {
 							className={
 								"" + (pathname === "/playlists" ? "active" : "")
 							}
-							href="/playlists"
+							onClick={goToPlaylists}
 						>
 							Playlists
 						</Nav.Link>
 						<Nav.Link
 							className={"" + (pathname === "/" ? "active" : "")}
-							href="/"
+							onClick={goToProfile}
 						>
 							Profile
 						</Nav.Link>
