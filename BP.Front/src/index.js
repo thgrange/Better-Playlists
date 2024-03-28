@@ -5,11 +5,11 @@ import App from "./App";
 import "./custom.scss";
 import { QueryClient, QueryClientProvider } from "react-query";
 
-const queryClient = new QueryClient();
+window.queryClient = new QueryClient();
 
 ReactDOM.render(
 	<React.StrictMode>
-		<QueryClientProvider client={queryClient}>
+		<QueryClientProvider client={window.queryClient}>
 			<App />
 		</QueryClientProvider>
 	</React.StrictMode>,
