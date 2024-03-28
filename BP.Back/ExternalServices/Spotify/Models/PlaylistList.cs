@@ -15,5 +15,7 @@ namespace ExternalServices.Spotify.Models
         public int? Offset { get; set; }
         public int? Total {  get; set; }
         public IEnumerable<PlaylistItem> Items { get; set; }
+        public int PageNumber { get; set; }
+        public bool HasMore { get; set; }
     }
 }

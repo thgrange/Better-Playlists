@@ -7,7 +7,7 @@ const Footer = () => {
 			className="bg-dark container vw-100 mw-100"
 			style={{
 				height: "120px",
-				sticky: "bottom"
+				sticky: "bottom",
 			}}
 		>
 			<SpotifyPlayer />

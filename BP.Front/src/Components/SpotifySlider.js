@@ -13,7 +13,7 @@ const SpotifySlider = ({
 	color = "white",
 	hoverColor = "#25D865",
 	disabled = false,
-	style = {}
+	style = {},
 }) => {
 	const [hover, setHover] = useState(false);
 	return (

@@ -4,7 +4,7 @@ import BPicon from "../Content/BPicon.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Container, Navbar, Nav, Offcanvas } from "react-bootstrap";
 
-const Header = (props) => {
+const Header = () => {
 	const navigate = useNavigate();
 	const goToHomePage = () => {
 		window.location.reload(false);

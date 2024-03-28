@@ -12,10 +12,9 @@ const LoggedPage = ({ children }) => {
 			<Header />
 			<div
 				className="bp-scroller"
+				id="bp-page"
 				style={{
-               height: "calc(100vh - (70px + 120px))"
-					// marginTop: "70px",
-					// marginBottom: "120px",
+					height: "calc(100vh - (70px + 120px))",
 				}}
 			>
 				{children}

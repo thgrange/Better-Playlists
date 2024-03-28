@@ -39,6 +39,12 @@ namespace ExternalServices.Spotify
         {
             var result = httpClient.GetFromJsonAsync<PlaylistList>($"me/playlists?offset={pageSize * pageNumber}&limit={pageSize}").Result;
 
+            if (result != null)
+            {
+                result.PageNumber = pageNumber;
+                result.HasMore = result.Items != null && result.Items.Any();
+            }
+
             return result;
         }
 

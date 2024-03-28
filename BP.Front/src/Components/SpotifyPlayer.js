@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ImageService from "../Services/ImageService";
 import SpotifySlider from "./SpotifySlider";
 import PlayerService from "../Services/PlayerService";
+import BPblackwhiteicon from "../Content/BPblackwhiteicon.png";
 
 const SpotifyPlayer = () => {
 	const [player, setPlayer] = useState(null);
@@ -30,16 +31,16 @@ const SpotifyPlayer = () => {
 					<img
 						style={{ height: hw, width: hw }}
 						src={image.url}
-						alt="BP logo"
-					></img>
+						alt="Album cover"
+					/>
 				);
 			}
 		}
 		return (
-			<FontAwesomeIcon
-				style={{ backgroundColor: "#191919", height: hw, width: hw }}
-				className="text-light"
-				icon="fa-music"
+			<img
+				style={{ height: hw, width: hw, backgroundColor: "#191919" }}
+				src={BPblackwhiteicon}
+				alt="Album cover"
 			/>
 		);
 	}
@@ -96,13 +97,17 @@ const SpotifyPlayer = () => {
 		}
 	}
 
+	function activateAndFocusPlayer() {
+		player.connect();
+	}
+
 	function initializePlayer() {
 		const spotifyPlayer = new window.Spotify.Player({
 			name: "Better Playlists",
 			getOAuthToken: (cb) => {
 				cb(LoginService.getToken());
 			},
-			volume: 0.2,
+			volume: displayVolume,
 		});
 
 		spotifyPlayer.addListener("autoplay_failed", () => {
@@ -126,7 +131,6 @@ const SpotifyPlayer = () => {
 				!state ? setActive(false) : setActive(true);
 			});
 		});
-		spotifyPlayer.connect();
 
 		setPlayer(spotifyPlayer);
 	}
@@ -163,162 +167,185 @@ const SpotifyPlayer = () => {
 		if (deviceId !== null) {
 			PlayerService.getPlayerConnection(deviceId, false);
 		}
-	}, [deviceId])
+	}, [deviceId]);
 
 	return (
-		<div className="row h-100">
+		<div className="position-relative h-100">
 			<div
-				className="border-4 ms-2 col d-flex align-items-center"
+				className="row h-100"
 				style={{
-					borderColor: "#191919",
-					padding: 0,
+					filter: isActive ? "none" : "blur(5px)",
 				}}
 			>
-				{getAlbumPic("100px", currentTrack)}
-				<div className="d-flex flex-column ms-3">
-					{currentTrack !== null &&
-						currentTrack.artists !== null &&
-						currentTrack.artists.length > 0 && (
-							<>
-								<span className="text-secondary">
-									{currentTrack.name}
-								</span>
-								<span className="text-light">
-									{currentTrack.artists[0].name}
-								</span>
-							</>
-						)}
-				</div>
-			</div>
-			<div className="col-5 d-flex flex-column my-auto">
-				<div className="d-flex justify-content-center mb-2">
-					<button
-						className="btn text-light spotify-btn"
-						onClick={() => {
-							player.previousTrack();
-						}}
-					>
-						<FontAwesomeIcon
-							className="fa-2x"
-							icon="fa-backward-step"
-						/>
-					</button>
-
-					<button
-						onClick={() => {
-							player.togglePlay();
-							// setPaused(!paused);
-						}}
-						className="btn text-bg-light text-dark btn-border-0 text mx-3 spotify-play-btn"
-					>
-						{paused ? (
-							<FontAwesomeIcon
-								className="fa-2x"
-								icon="play"
-							/>
-						) : (
-							<FontAwesomeIcon
-								className="fa-2x"
-								icon="pause"
-							/>
-						)}
-					</button>
-
-					<button
-						className="btn text-light spotify-btn"
-						onClick={() => {
-							player.nextTrack();
-						}}
-					>
-						<FontAwesomeIcon
-							className="fa-2x"
-							icon="fa-solid fa-forward-step"
-						/>
-					</button>
-				</div>
-				<div className="row align-items-center">
-					<span
-						className="text-light"
-						style={{
-							width: "53px",
-						}}
-					>
-						{msToTime(
-							currentTrack === null || currentTrack === undefined
-								? null
-								: position
-						)}
-					</span>
-					<SpotifySlider
-						value={position}
-						step={100}
-						max={duration}
-						className="col"
-						style={{
-							padding: 0,
-						}}
-						disabled={
-							currentTrack === null || currentTrack === undefined
-						}
-						onChange={(event) => {
-							player.seek(event.target.valueAsNumber);
-						}}
-					/>
-					<span
-						className="text-light"
-						style={{
-							width: "53px",
-						}}
-					>
-						{msToTime(
-							currentTrack === null || currentTrack === undefined
-								? null
-								: duration
-						)}
-					</span>
-				</div>
-			</div>
-			<div className="pe-3 d-flex justify-content-end col">
-				<button
-					className="btn text-light spotify-btn my-auto"
-					onClick={muteUnmutePlayer}
+				<div
+					className="border-4 ms-2 col d-flex align-items-center"
 					style={{
-						width: "50px",
+						borderColor: "#191919",
+						padding: 0,
 					}}
 				>
-					{((muted || volume === 0) && (
-						<FontAwesomeIcon
-							className="fa-lg"
-							icon="fa-solid fa-volume-xmark"
+					{getAlbumPic("100px", currentTrack)}
+					<div className="d-flex flex-column ms-3">
+						{currentTrack !== null &&
+							currentTrack.artists !== null &&
+							currentTrack.artists.length > 0 && (
+								<>
+									<span className="text-secondary">
+										{currentTrack.name}
+									</span>
+									<span className="text-light">
+										{currentTrack.artists[0].name}
+									</span>
+								</>
+							)}
+					</div>
+				</div>
+				<div className="col-5 d-flex flex-column my-auto">
+					<div className="d-flex justify-content-center mb-2">
+						<button
+							className="btn text-light spotify-btn"
+							onClick={() => {
+								player.previousTrack();
+							}}
+							disabled={!isActive}
+						>
+							<FontAwesomeIcon
+								className="fa-2x"
+								icon="fa-backward-step"
+							/>
+						</button>
+
+						<button
+							onClick={() => {
+								player.togglePlay();
+							}}
+							className="btn text-bg-light text-dark btn-border-0 text mx-3 spotify-play-btn"
+							disabled={!isActive}
+						>
+							{paused ? (
+								<FontAwesomeIcon
+									className="fa-2x"
+									icon="play"
+								/>
+							) : (
+								<FontAwesomeIcon
+									className="fa-2x"
+									icon="pause"
+								/>
+							)}
+						</button>
+
+						<button
+							className="btn text-light spotify-btn"
+							disabled={!isActive}
+							onClick={() => {
+								player.nextTrack();
+							}}
+						>
+							<FontAwesomeIcon
+								className="fa-2x"
+								icon="fa-solid fa-forward-step"
+							/>
+						</button>
+					</div>
+					<div className="row align-items-center">
+						<span
+							className="text-light"
+							style={{
+								width: "53px",
+							}}
+						>
+							{msToTime(
+								currentTrack === null ||
+									currentTrack === undefined
+									? null
+									: position
+							)}
+						</span>
+						<SpotifySlider
+							value={position}
+							step={100}
+							max={duration}
+							className="col"
+							style={{
+								padding: 0,
+							}}
+							disabled={
+								currentTrack === null ||
+								currentTrack === undefined ||
+								!isActive
+							}
+							onChange={(event) => {
+								player.seek(event.target.valueAsNumber);
+							}}
 						/>
-					)) ||
-						(volume < 0.2 && (
+						<span
+							className="text-light"
+							style={{
+								width: "53px",
+							}}
+						>
+							{msToTime(
+								currentTrack === null ||
+									currentTrack === undefined
+									? null
+									: duration
+							)}
+						</span>
+					</div>
+				</div>
+				<div className="pe-3 d-flex justify-content-end col">
+					<button
+						className="btn text-light spotify-btn my-auto"
+						onClick={muteUnmutePlayer}
+						style={{
+							width: "50px",
+						}}
+						disabled={!isActive}
+					>
+						{((muted || volume === 0) && (
 							<FontAwesomeIcon
 								className="fa-lg"
-								icon="fa-solid fa-volume-off"
+								icon="fa-solid fa-volume-xmark"
 							/>
 						)) ||
-						(volume < 0.5 && (
-							<FontAwesomeIcon
-								className="fa-lg"
-								icon="fa-solid fa-volume-low"
-							/>
-						)) || (
-							<FontAwesomeIcon
-								className="fa-lg"
-								icon="fa-solid fa-volume-high"
-							/>
-						)}
-				</button>
-				<SpotifySlider
-					value={displayVolume}
-					step={0.02}
-					className="my-auto"
-					onChange={(event) => {
-						setPlayerVolume(event.target.valueAsNumber);
-					}}
-				></SpotifySlider>
+							(volume < 0.2 && (
+								<FontAwesomeIcon
+									className="fa-lg"
+									icon="fa-solid fa-volume-off"
+								/>
+							)) ||
+							(volume < 0.5 && (
+								<FontAwesomeIcon
+									className="fa-lg"
+									icon="fa-solid fa-volume-low"
+								/>
+							)) || (
+								<FontAwesomeIcon
+									className="fa-lg"
+									icon="fa-solid fa-volume-high"
+								/>
+							)}
+					</button>
+					<SpotifySlider
+						value={displayVolume}
+						step={0.02}
+						className="my-auto"
+						disabled={!isActive}
+						onChange={(event) => {
+							setPlayerVolume(event.target.valueAsNumber);
+						}}
+					></SpotifySlider>
+				</div>
 			</div>
+			{!isActive && (
+				<button
+					className="position-absolute top-50 start-50 translate-middle btn btn-lg btn-primary"
+					onClick={activateAndFocusPlayer}
+				>
+					Basculer la lecture de Spotify ici
+				</button>
+			)}
 		</div>
 	);
 };
