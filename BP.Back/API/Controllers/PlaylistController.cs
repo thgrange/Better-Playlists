@@ -21,5 +21,21 @@ namespace API.Controllers
 
             return Ok(playlists);
         }
+
+        [HttpGet("{playlistId}")]
+        public IActionResult GetPlaylist(string playlistId)
+        {
+            var playlist = SpotifyService.GetPlaylist(playlistId);
+
+            return Ok(playlist);
+        }
+
+        [HttpGet("{playlistId}/gettracks")]
+        public IActionResult GetPlaylistTracks(string playlistId, int pageSize, int pageNumber)
+        {
+            var tracks = SpotifyService.GetPlaylistTracks(playlistId, pageSize, pageNumber);
+
+            return Ok(tracks);
+        }
     }
 }

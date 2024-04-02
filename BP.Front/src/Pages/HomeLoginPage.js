@@ -5,7 +5,7 @@ import LoginService from '../Services/LoginService';
 const HomeLoginPage = () => {
 
     return (
-        <div className='d-flex container-fluid vh-100 vw-100'>
+        <div className='d-flex container-fluid vh-100 vw-100 bg-dark'>
             <div className='m-auto d-flex flex-column'>
                 <img
                     src={BPicon}

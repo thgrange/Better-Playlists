@@ -2,10 +2,67 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LoginService from "../Services/LoginService";
 import BPicon from "../Content/BPicon.png";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Container, Navbar, Nav, Offcanvas } from "react-bootstrap";
+import { Container, Navbar, Nav, Offcanvas, NavDropdown } from "react-bootstrap";
+import ImageService from "../Services/ImageService";
+import { useEffect, useState } from "react";
+import ProfileService from "../Services/ProfileService";
+import { Avatar, Tooltip } from "@mui/material";
 
 const Header = () => {
+	const location = useLocation();
+	const { hash, pathname, search } = location;
 	const navigate = useNavigate();
+	const [profile, setProfile] = useState({
+		display_name: ""
+	});
+
+	function getProfilePic(hw) {
+		if (profile != null) {
+			const image = ImageService.getBiggestImage(profile.images);
+			if (image != null) {
+				return (
+					<Tooltip
+						title={profile?.display_name}
+						placement="top"
+					>
+						<Avatar
+							src={image.url}
+							style={{ height: hw, width: hw }}
+						/>
+					</Tooltip>
+				);
+			}
+		}
+		return (
+			<div
+				className="rounded-circle border border-4 border-primary overflow-hidden"
+				style={{
+					height: hw,
+					width: hw,
+				}}
+			>
+				<FontAwesomeIcon
+					style={{
+						height: hw,
+						width: hw,
+					}}
+					className="fa-solid m-auto d-block w-100 h-100"
+					icon="fa-user-alt"
+				/>
+			</div>
+		);
+	}
+
+	function getProfileUrl() {
+		if (
+			profile.external_urls != null &&
+			profile.external_urls.spotify != null
+		) {
+			return profile.external_urls.spotify;
+		}
+		return;
+	}
+
 	const goToHomePage = () => {
 		window.location.reload(false);
 	};
@@ -22,8 +79,13 @@ const Header = () => {
 		navigate("/");
 	}
 
-	const location = useLocation();
-	const { hash, pathname, search } = location;
+    useEffect(() => {
+        ProfileService.getConnectedUser().then((response) => {
+            if (response.status === 200) {
+                setProfile(response.data);
+            }
+        });
+    }, []);
 
 	return (
 		<Navbar
@@ -39,7 +101,7 @@ const Header = () => {
 					src={BPicon}
 					className="ms-1"
 					style={{
-						transform: "translate(0%,20%)",
+						transform: "translate(0%,15%)",
 						height: "120px",
 					}}
 					alt="BP logo"
@@ -49,7 +111,7 @@ const Header = () => {
 			<Navbar.Offcanvas id="betterplaylistnavbar">
 				<Offcanvas.Header closeButton>
 					<Offcanvas.Title
-						className="text-primary"
+						className="text-secondary"
 						id="betterplaylistnavbartitle"
 					>
 						Better Playlists
@@ -57,29 +119,29 @@ const Header = () => {
 				</Offcanvas.Header>
 				<Offcanvas.Body>
 					<Nav className="justify-content-end flex-grow-1 pe-3">
-						<Nav.Link
-							className={
-								"" + (pathname === "/playlists" ? "active" : "")
-							}
-							onClick={goToPlaylists}
+						<NavDropdown
+							title={getProfilePic("30px")}
+							aria-label={profile?.display_name}
+							drop="down-centered"
 						>
-							Playlists
-						</Nav.Link>
-						<Nav.Link
-							className={"" + (pathname === "/" ? "active" : "")}
-							onClick={goToProfile}
-						>
-							Profile
-						</Nav.Link>
-						<Nav.Link
-							onClick={logout}
-							className="btn btn-danger logout-btn"
-						>
-							<FontAwesomeIcon
-								icon="sign-out-alt"
-								className="col-md-1 fa-w-20"
+							<NavDropdown.Item className="text-secondary d-flex" href={getProfileUrl()} target="_blank" rel="noreferrer">
+								Compte
+								<FontAwesomeIcon
+									className="fa-solid ms-auto my-auto me-0"
+									icon="up-right-from-square"
+								/>
+							</NavDropdown.Item>
+							<NavDropdown.Item className="text-secondary">Profil</NavDropdown.Item>
+							<NavDropdown.Divider
+								style={{ backgroundColor: "#525252" }}
 							/>
-						</Nav.Link>
+							<NavDropdown.Item
+								className="text-secondary"
+								onClick={logout}
+							>
+								Déconnexion
+							</NavDropdown.Item>
+						</NavDropdown>
 					</Nav>
 				</Offcanvas.Body>
 			</Navbar.Offcanvas>

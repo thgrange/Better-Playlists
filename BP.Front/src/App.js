@@ -6,7 +6,6 @@ import fontawesome from "@fortawesome/fontawesome";
 import LoggedPage from "./Pages/LoggedPage";
 import * as Icons from "@fortawesome/fontawesome-free-solid";
 import * as Icons2 from "@fortawesome/free-solid-svg-icons";
-import PlaylistsPage from "./Pages/PlaylistsPage";
 
 var iconList = Object.keys(Icons)
 	.filter((key) => key !== "fas" && key !== "prefix")
@@ -37,14 +36,6 @@ function App() {
 					element={
 						<LoggedPage>
 							<HomePage />
-						</LoggedPage>
-					}
-				/>
-				<Route
-					path="/playlists"
-					element={
-						<LoggedPage>
-							<PlaylistsPage />
 						</LoggedPage>
 					}
 				/>

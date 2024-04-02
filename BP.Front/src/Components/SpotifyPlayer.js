@@ -17,10 +17,6 @@ const SpotifyPlayer = () => {
 	const [position, setPosition] = useState(0);
 	const [duration, setDuration] = useState(1);
 	const [positionInterval, setPositionInterval] = useState(0);
-	const nullTrack = {
-		name: "",
-		artists: [{ name: "" }],
-	};
 	const [currentTrack, setCurrentTrack] = useState(null);
 
 	function getAlbumPic(hw, track) {
@@ -309,13 +305,13 @@ const SpotifyPlayer = () => {
 								icon="fa-solid fa-volume-xmark"
 							/>
 						)) ||
-							(volume < 0.2 && (
+							(volume < 0.1 && (
 								<FontAwesomeIcon
 									className="fa-lg"
 									icon="fa-solid fa-volume-off"
 								/>
 							)) ||
-							(volume < 0.5 && (
+							(volume < 0.3 && (
 								<FontAwesomeIcon
 									className="fa-lg"
 									icon="fa-solid fa-volume-low"
@@ -330,6 +326,7 @@ const SpotifyPlayer = () => {
 					<SpotifySlider
 						value={displayVolume}
 						step={0.02}
+						max={0.5}
 						className="my-auto"
 						disabled={!isActive}
 						onChange={(event) => {

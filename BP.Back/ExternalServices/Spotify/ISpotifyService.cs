@@ -1,4 +1,5 @@
-﻿using ExternalServices.Spotify.Models;
+﻿using ExternalServices.Spotify.Models.Playlist;
+using ExternalServices.Spotify.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,7 @@ namespace ExternalServices.Spotify
         Profile GetCurrentUserProfile();
         PlaylistList GetCurrentUserPlaylists(int pageSize, int pageNumber);
         void GetPlayerConnection(string deviceId, bool play);
+        Playlist GetPlaylist(string playlistId);
+        PlaylistTracks GetPlaylistTracks(string playlistId, int pageSize, int pageNumber);
     }
 }

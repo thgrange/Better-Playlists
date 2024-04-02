@@ -17,6 +17,14 @@ class PlaylistService {
     getConnectedUserPlaylists(pageNumber, pageSize) {
         return this.get(`/getplaylists?pageNumber=${pageNumber}&pageSize=${pageSize}`);
     }
+
+    getPlaylistTracks(playlistId, pageNumber, pageSize) {
+        return this.get(`/${playlistId}/gettracks?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+    }
+
+    getPlaylist(playlistId) {
+        return this.get(`/${playlistId}`);
+    }
 }
 
 export default new PlaylistService();

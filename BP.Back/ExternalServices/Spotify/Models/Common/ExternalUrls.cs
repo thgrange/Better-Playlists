@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExternalServices.Spotify.Models
+namespace ExternalServices.Spotify.Models.Common
 {
     public class ExternalUrls
     {
-        public string Spotify {  get; set; }
+        public string Spotify { get; set; }
     }
 }
