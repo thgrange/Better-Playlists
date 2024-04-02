@@ -229,13 +229,16 @@ span::first-letter {
 
 .track-item {
   // cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
   &:hover {
     background-color: #1A1A1A !important;
   }
 }
 
 .track-item.selected {
-  background-color: #232323!important;
+  background-color: #393939!important;
   &:hover{
     background-color: #393939!important;
   }

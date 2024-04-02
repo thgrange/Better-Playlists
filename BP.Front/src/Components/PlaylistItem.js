@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ImageService from "../Services/ImageService";
+import DisplayService from "../Services/DisplayService";
 import BPblackwhiteicon from "../Content/BPblackwhiteicon.png";
 
 const PlaylistItem = ({ playlist = null, selected = false, onClick = null }) => {
 	function getAlbumPic(hw) {
 		if (playlist != null) {
-			const image = ImageService.getBiggestImage(playlist.images);
+			const image = DisplayService.getBiggestImage(playlist.images);
 			if (image != null) {
 				return (
 					<img

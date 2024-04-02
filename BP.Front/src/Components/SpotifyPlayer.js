@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import LoginService from "../Services/LoginService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ImageService from "../Services/ImageService";
+import DisplayService from "../Services/DisplayService";
 import SpotifySlider from "./SpotifySlider";
 import PlayerService from "../Services/PlayerService";
 import BPblackwhiteicon from "../Content/BPblackwhiteicon.png";
@@ -21,7 +21,7 @@ const SpotifyPlayer = () => {
 
 	function getAlbumPic(hw, track) {
 		if (track != null && track.album != null) {
-			const image = ImageService.getBiggestImage(track.album.images);
+			const image = DisplayService.getBiggestImage(track.album.images);
 			if (image != null) {
 				return (
 					<img
@@ -39,21 +39,6 @@ const SpotifyPlayer = () => {
 				alt="Album cover"
 			/>
 		);
-	}
-
-	function msToTime(ms) {
-		if (ms === null || ms === undefined) {
-			return "--:--";
-		}
-		var seconds = Math.floor((ms / 1000) % 60),
-			minutes = Math.floor((ms / (1000 * 60)) % 60),
-			hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
-		if (hours > 0) {
-			minutes = minutes < 10 ? "0" + minutes : minutes;
-		}
-		seconds = seconds < 10 ? "0" + seconds : seconds;
-
-		return `${hours > 0 ? `${hours}:` : ""}${minutes}:${seconds}`;
 	}
 
 	function disconnectSpotify() {
@@ -251,7 +236,7 @@ const SpotifyPlayer = () => {
 								width: "53px",
 							}}
 						>
-							{msToTime(
+							{DisplayService.msToTime(
 								currentTrack === null ||
 									currentTrack === undefined
 									? null
@@ -281,7 +266,7 @@ const SpotifyPlayer = () => {
 								width: "53px",
 							}}
 						>
-							{msToTime(
+							{DisplayService.msToTime(
 								currentTrack === null ||
 									currentTrack === undefined
 									? null

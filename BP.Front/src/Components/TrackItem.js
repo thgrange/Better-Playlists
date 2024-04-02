@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ImageService from "../Services/ImageService";
+import DisplayService from "../Services/DisplayService";
 import BPblackwhiteicon from "../Content/BPblackwhiteicon.png";
 
 const TrackItem = ({ track = null }) => {
 	function getTrackPic(hw) {
 		if (track?.album) {
-			const image = ImageService.getBiggestImage(track?.album.images);
+			const image = DisplayService.getBiggestImage(track?.album.images);
 			if (image != null) {
 				return (
 					<img
@@ -28,7 +28,7 @@ const TrackItem = ({ track = null }) => {
 
 	return (
 		<div
-			className={`align-content-center bg-dark mx-2 rounded-3 d-flex p-2 pe-0 track-item`}
+			className={`align-content-center mx-2 rounded-3 d-flex p-2 pe-0`}
 			onDoubleClick={() => {
 				console.log("play");
 			}}

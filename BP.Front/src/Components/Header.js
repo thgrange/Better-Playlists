@@ -3,7 +3,7 @@ import LoginService from "../Services/LoginService";
 import BPicon from "../Content/BPicon.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Container, Navbar, Nav, Offcanvas, NavDropdown } from "react-bootstrap";
-import ImageService from "../Services/ImageService";
+import DisplayService from "../Services/DisplayService";
 import { useEffect, useState } from "react";
 import ProfileService from "../Services/ProfileService";
 import { Avatar, Tooltip } from "@mui/material";
@@ -18,7 +18,7 @@ const Header = () => {
 
 	function getProfilePic(hw) {
 		if (profile != null) {
-			const image = ImageService.getBiggestImage(profile.images);
+			const image = DisplayService.getBiggestImage(profile.images);
 			if (image != null) {
 				return (
 					<Tooltip
