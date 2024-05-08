@@ -2,10 +2,16 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import PlaylistService from "../Services/PlaylistService";
 import TrackItem from "./TrackItem";
 import { useEffect, useState } from "react";
-import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import {
+	createColumnHelper,
+	flexRender,
+	getCoreRowModel,
+	useReactTable,
+} from "@tanstack/react-table";
 import PlaylistItem from "./PlaylistItem";
 import DisplayService from "../Services/DisplayService";
 import Moment from "react-moment";
+import { Skeleton } from '@mui/material';
 
 const PlaylistDisplay = ({ playlistId }) => {
 	const pageSize = 30;
@@ -26,12 +32,12 @@ const PlaylistDisplay = ({ playlistId }) => {
 	const columns = [
 		columnHelper.accessor((row) => row.order, {
 			id: "order",
-			cell: (info) => <span className="ms-2">{info.getValue()}</span>, //mettre un play avec 
+			cell: (info) => <span className="ms-2">{info.getValue()}</span>, //mettre un play avec
 			header: () => <span className="ms-2">#</span>,
 		}),
 		columnHelper.accessor((row) => row.track, {
 			id: "name",
-			cell: (info) => <TrackItem track={info.getValue()}/>,
+			cell: (info) => <TrackItem track={info.getValue()} />,
 			header: () => <span>Titre</span>,
 		}),
 		columnHelper.accessor((row) => row.track.album.name, {
@@ -42,39 +48,53 @@ const PlaylistDisplay = ({ playlistId }) => {
 		columnHelper.accessor((row) => row.added_at, {
 			id: "addedDate",
 			header: () => <span>Date d'ajout</span>,
-			cell: (info) => <Moment format="DD-MM-yyyy">{info.getValue()}</Moment>,
+			cell: (info) => (
+				<Moment format="DD-MM-yyyy">{info.getValue()}</Moment>
+			),
 		}),
-		columnHelper.accessor((row) => DisplayService.msToTime(row.track.duration_ms), {
-			id: "duration",
-			header: () => <span className="me-2">Durée</span>,
-			cell: (info) => <span className="me-2">{info.renderValue()}</span>,
-		}),
+		columnHelper.accessor(
+			(row) => DisplayService.msToTime(row.track.duration_ms),
+			{
+				id: "duration",
+				header: () => <span className="me-2">Durée</span>,
+				cell: (info) => (
+					<span className="me-2">{info.renderValue()}</span>
+				),
+			}
+		),
 	];
 
-	var { isLoading, isError, error, data, fetchNextPage, fetchPreviousPage ,isFetching } =
-		useInfiniteQuery({
-			queryKey: ["tracks"],
-			queryFn: fetchPlaylists,
-			getNextPageParam: (lastPage, pages) => {
-				if (!lastPage.hasMore) {
-					return undefined;
-				}
-				return lastPage.pageNumber + 1;
-			},
-			getPreviousPageParam: (firstPage, pages) => {
-				if (!firstPage || firstPage.pageNumber === 0) {
-					return undefined;
-				}
-				return firstPage.pageNumber - 1;
-			},
-			// maxPages:4 OPTIMISER AVEC LE SCROLL QUI BUTE EN HAUT
-		});
+	var {
+		isLoading,
+		isError,
+		error,
+		data,
+		fetchNextPage,
+		fetchPreviousPage,
+		isFetching,
+	} = useInfiniteQuery({
+		queryKey: ["tracks"],
+		queryFn: fetchPlaylists,
+		getNextPageParam: (lastPage, pages) => {
+			if (!lastPage.hasMore) {
+				return undefined;
+			}
+			return lastPage.pageNumber + 1;
+		},
+		getPreviousPageParam: (firstPage, pages) => {
+			if (!firstPage || firstPage.pageNumber === 0) {
+				return undefined;
+			}
+			return firstPage.pageNumber - 1;
+		},
+		// maxPages:4 OPTIMISER AVEC LE SCROLL QUI BUTE EN HAUT
+	});
 
-		const table = useReactTable({
-			data: data && data.pages ? data.pages.map((p) => p.items).flat(1) : [],
-			columns: columns,
-			getCoreRowModel: getCoreRowModel()
-		});
+	const table = useReactTable({
+		data: data && data.pages ? data.pages.map((p) => p.items).flat(1) : [],
+		columns: columns,
+		getCoreRowModel: getCoreRowModel(),
+	});
 
 	function onScroll() {
 		const container = document.getElementById("tracks-scroller");
@@ -93,28 +113,31 @@ const PlaylistDisplay = ({ playlistId }) => {
 			if (event.ctrlKey && event.shiftKey) {
 				const lastRow = selectedRows.slice(-1)[0];
 				const lastRowId = lastRow ? lastRow.id : 1;
-				const length = (lastRowId > row.id ? lastRowId - row.id : row.id - lastRowId) + 1;
+				const length =
+					(lastRowId > row.id
+						? lastRowId - row.id
+						: row.id - lastRowId) + 1;
 				const start = lastRowId > row.id ? row.id : lastRowId;
-				const rows = Array.from(
-					{ length: length },
-					(v, k) => { return Number(k) + Number(start)}
-				).map((id) => {
-					return { id: String(id)  };
+				const rows = Array.from({ length: length }, (v, k) => {
+					return Number(k) + Number(start);
+				}).map((id) => {
+					return { id: String(id) };
 				});
 				setSelectedRows([...selectedRows, ...rows]);
-			}
-			else if (event.ctrlKey) {
+			} else if (event.ctrlKey) {
 				setSelectedRows([...selectedRows, row]);
 			} else if (event.shiftKey) {
 				const lastRow = selectedRows.slice(-1)[0];
 				const lastRowId = lastRow ? lastRow.id : 1;
-				const length = (lastRowId > row.id ? lastRowId - row.id : row.id - lastRowId) + 1;
+				const length =
+					(lastRowId > row.id
+						? lastRowId - row.id
+						: row.id - lastRowId) + 1;
 				const start = lastRowId > row.id ? row.id : lastRowId;
-				const rows = Array.from(
-					{ length: length },
-					(v, k) => { return Number(k) + Number(start)}
-				).map((id) => {
-					return { id: String(id)  };
+				const rows = Array.from({ length: length }, (v, k) => {
+					return Number(k) + Number(start);
+				}).map((id) => {
+					return { id: String(id) };
 				});
 				setSelectedRows([...rows]);
 			} else {
@@ -172,7 +195,13 @@ const PlaylistDisplay = ({ playlistId }) => {
 						{table.getRowModel().rows.map((row) => (
 							<tr
 								key={row.id}
-								className={`track-item ${selectedRows.map(r => r.id).includes(row.id) ? "selected" : ""}`}
+								className={`track-item ${
+									selectedRows
+										.map((r) => r.id)
+										.includes(row.id)
+										? "selected"
+										: ""
+								}`}
 								onDoubleClick={() => {
 									console.log("play");
 								}}
@@ -188,6 +217,13 @@ const PlaylistDisplay = ({ playlistId }) => {
 								))}
 							</tr>
 						))}
+						{!isFetching && (
+							<>
+							<tr>
+								<Skeleton/>
+							</tr>
+							</>
+						)}
 					</tbody>
 					<tfoot>
 						{table.getFooterGroups().map((footerGroup) => (
@@ -218,6 +254,14 @@ const PlaylistDisplay = ({ playlistId }) => {
 							/>
 						))
 					)} */}
+				{/* {isFetching && (
+					<div
+						className="position-relative"
+						style={{ marginBottom: "75px" }}
+					>
+						<span className="loader position-absolute start-50 translate-middle"></span>
+					</div>
+				)} */}
 				{isFetching && (
 					<div
 						className="position-relative"

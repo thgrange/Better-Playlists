@@ -1,6 +1,7 @@
 import React from 'react';
 import BPicon from "../Content/BPicon.png"
-import LoginService from '../Services/LoginService';
+import RequestService from '../Services/RequestService';
+import QRCode from 'react-qr-code';
 
 const HomeLoginPage = () => {
 
@@ -16,7 +17,7 @@ const HomeLoginPage = () => {
                     alt='BP logo'
                 />
                 <a
-                    href={LoginService.getSpotifyLoginUrl()}
+                    href={RequestService.getSpotifyLoginUrl()}
                     className='btn btn-primary m-auto fw-bold w-50 login-btn'
                     style={{
                         padding: "3%"

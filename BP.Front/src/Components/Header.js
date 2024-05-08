@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import LoginService from "../Services/LoginService";
+import StorageService from "../Services/StorageService";
 import BPicon from "../Content/BPicon.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Container, Navbar, Nav, Offcanvas, NavDropdown } from "react-bootstrap";
@@ -68,7 +68,7 @@ const Header = () => {
 	};
 
 	function logout() {
-		LoginService.logout(goToHomePage);
+		StorageService.logout(goToHomePage);
 	}
 
 	function goToPlaylists() {

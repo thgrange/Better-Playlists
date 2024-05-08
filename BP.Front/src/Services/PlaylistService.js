@@ -1,6 +1,6 @@
 import axios from 'axios';
 import config from '../config.json';
-import LoginService from './LoginService';
+import StorageService from './StorageService';
 
 class PlaylistService {
     constructor() {
@@ -11,7 +11,7 @@ class PlaylistService {
     }
 
     get(request) {
-        return this.axiosInstance.get(request, LoginService.getAuthorizationHeader());
+        return this.axiosInstance.get(request, StorageService.getAuthorizationHeader());
     }
 
     getConnectedUserPlaylists(pageNumber, pageSize) {

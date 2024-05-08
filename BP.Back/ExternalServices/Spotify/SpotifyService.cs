@@ -1,4 +1,5 @@
-﻿using ExternalServices.Spotify.Models.Playlist;
+﻿using ExternalServices.Spotify.Models.Auth;
+using ExternalServices.Spotify.Models.Playlist;
 using ExternalServices.Spotify.Models.User;
 using System;
 using System.Collections.Generic;

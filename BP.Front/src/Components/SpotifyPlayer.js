@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import LoginService from "../Services/LoginService";
+import StorageService from "../Services/StorageService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DisplayService from "../Services/DisplayService";
 import SpotifySlider from "./SpotifySlider";
@@ -86,7 +86,7 @@ const SpotifyPlayer = () => {
 		const spotifyPlayer = new window.Spotify.Player({
 			name: "Better Playlists",
 			getOAuthToken: (cb) => {
-				cb(LoginService.getToken());
+				cb(StorageService.getToken());
 			},
 			volume: displayVolume,
 		});

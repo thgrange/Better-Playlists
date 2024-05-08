@@ -215,6 +215,9 @@ span::first-letter {
 
 .playlist-item {
   cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
   &:hover {
     background-color: #1A1A1A !important;
   }

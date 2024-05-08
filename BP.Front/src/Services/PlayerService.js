@@ -1,6 +1,6 @@
 import axios from "axios";
 import config from "../config.json";
-import LoginService from "./LoginService";
+import StorageService from "./StorageService";
 
 class PlayerService {
 	constructor() {
@@ -13,7 +13,7 @@ class PlayerService {
 	get(request) {
 		return this.axiosInstance.get(
 			request,
-			LoginService.getAuthorizationHeader()
+			StorageService.getAuthorizationHeader()
 		);
 	}
 

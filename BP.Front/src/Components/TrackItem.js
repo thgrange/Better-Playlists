@@ -56,7 +56,7 @@ const TrackItem = ({ track = null }) => {
 					{track.artists &&
 						track.artists.map((a, i) => (
 							<>
-								{i > 1 && ", "}
+								{i > 0 && ", "}
 								<a key={a.id} href={a.external_urls?.spotify}>{a.name}</a>
 							</>
 						))}

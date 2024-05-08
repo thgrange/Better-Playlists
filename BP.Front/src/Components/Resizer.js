@@ -21,7 +21,6 @@ const Resizer = ({ children, parentId }) => {
 		container.addEventListener("mousemove", function (e) {
 			moveX = e.x;
 			if (drag) {
-				console.log(`${moveX - resize.getBoundingClientRect().width / 2 + "px"}`);
 				child.style.width =
 					moveX - resize.getBoundingClientRect().width / 2 + "px";
 			}

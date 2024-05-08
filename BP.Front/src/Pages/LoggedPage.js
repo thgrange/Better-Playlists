@@ -1,10 +1,10 @@
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
-import LoginService from "../Services/LoginService";
+import StorageService from "../Services/StorageService";
 import HomeLoginPage from "./HomeLoginPage";
 
 const LoggedPage = ({ children }) => {
-	if (!LoginService.isLogged()) {
+	if (!StorageService.isLogged()) {
 		return <HomeLoginPage />;
 	}
 	return (
