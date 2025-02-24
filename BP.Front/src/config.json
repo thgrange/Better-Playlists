@@ -1,5 +1,5 @@
 {
-    "apiUrl": "https://localhost:7000/api",
+    "apiUrl": "https://localhost:44301/api",
     "clientId": "3a2dbd4bf78b44678da1bf3daccd03a7",
     "redirectUrl": "http://localhost:3000/login"
 }

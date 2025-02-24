@@ -37,5 +37,13 @@ namespace API.Controllers
 
             return Ok(tracks);
         }
+
+        [HttpGet("{playlistId}/getalltracks")]
+        public IActionResult GetPlaylistAllTracks(string playlistId)
+        {
+            var tracks = SpotifyService.GetPlaylistAllTracks(playlistId);
+
+            return Ok(tracks);
+        }
     }
 }

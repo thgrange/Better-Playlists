@@ -9,5 +9,7 @@ namespace Database.Models
 
         public DbSet<Room> Rooms { get; set; }
 		public DbSet<WaitingTrack> WaitingTracks { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Track> Tracks { get; set; }
 	}
 }

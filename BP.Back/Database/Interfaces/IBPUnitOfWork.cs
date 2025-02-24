@@ -8,5 +8,7 @@ namespace Database.Interfaces
 {
     public interface IBPUnitOfWork
     {
+        TrackRepository TrackRepository { get; }
+        UserRepository UserRepository { get; }
     }
 }

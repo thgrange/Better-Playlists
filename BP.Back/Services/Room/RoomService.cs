@@ -12,7 +12,7 @@ namespace Services.Room
 		{
 
 		}
-		public Guid CreateRoom(string refreshToken, )
+		public Guid CreateRoom(string refreshToken)
 		{
 			return Guid.Empty;
 		}

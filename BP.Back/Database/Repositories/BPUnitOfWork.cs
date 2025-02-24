@@ -11,9 +11,36 @@ namespace Database.Repositories
     {
         private BPContext _context;
 
+        private TrackRepository _trackRepository;
+        private UserRepository _userRepository;
+
         public BPUnitOfWork(BPContext context)
         {
             _context = context;
+        }
+
+        public TrackRepository TrackRepository
+        {
+            get
+            {
+                if (_trackRepository == null)
+                {
+                    _trackRepository = new TrackRepository(_context);
+                }
+                return _trackRepository;
+            }
+        }
+
+        public UserRepository UserRepository
+        {
+            get
+            {
+                if (_userRepository == null)
+                {
+                    _userRepository = new UserRepository(_context);
+                }
+                return _userRepository;
+            }
         }
     }
 }

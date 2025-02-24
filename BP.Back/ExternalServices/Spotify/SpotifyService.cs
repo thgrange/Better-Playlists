@@ -1,4 +1,7 @@
-﻿using ExternalServices.Spotify.Models.Auth;
+﻿using Database.Interfaces;
+using Database.Models;
+using Database.Repositories;
+using ExternalServices.Spotify.Models.Auth;
 using ExternalServices.Spotify.Models.Playlist;
 using ExternalServices.Spotify.Models.User;
 using System;
@@ -15,13 +18,15 @@ namespace ExternalServices.Spotify
     {
         private string bearerToken = string.Empty;
         private HttpClient httpClient;
+        private IBPUnitOfWork _unitOfWork;
 
-        public SpotifyService()
+        public SpotifyService(IBPUnitOfWork unitOfWork)
         {
             httpClient = new HttpClient
             {
                 BaseAddress = new Uri("https://api.spotify.com/v1/")
             };
+            _unitOfWork = unitOfWork;
         }
 
         public void IdentiySpotifyUser(string bearer)
@@ -79,6 +84,45 @@ namespace ExternalServices.Spotify
             }
 
             return playlistTracks;
+        }
+
+        public IEnumerable<string> GetPlaylistAllTracks(string playlistId)
+        {
+            var tracks = new List<string>();
+            var request = $"playlists/{playlistId}/tracks?fields=next,items(track(id))";
+
+            while (!string.IsNullOrWhiteSpace(request))
+            {
+                var playlistTracks = httpClient.GetFromJsonAsync<PlaylistTracks>(request).Result;
+
+                if (playlistTracks != null)
+                {
+                    request = playlistTracks.Next;
+                    tracks.AddRange(playlistTracks.Items.Select(t => t.Track.Id));
+                }
+                else
+                    request = string.Empty;
+            }
+            return tracks;
+        }
+
+        public User Connect()
+        {
+            var user = _unitOfWork.UserRepository.GetUserWithToken(bearerToken);
+
+            if (user == null)
+            {
+                var profile = GetCurrentUserProfile();
+
+                user = _unitOfWork.UserRepository.ChangeTokenOrRegister(bearerToken, profile.Id);
+            }
+
+            return user;
+        }
+
+        public void PlayTrack(string trackId)
+        {
+
         }
     }
 }

@@ -11,6 +11,7 @@ using Database.Interfaces;
 using Database.Repositories;
 using Services.Security;
 using ExternalServices.Spotify;
+using Services.Weighting;
 
 namespace API
 {
@@ -32,13 +33,7 @@ namespace API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Better Playlists API", Version = "v1" });
             });
 
-            //Changer la méthode d'injection de dépendance en modules
-
-            services.AddScoped<ISecurityService, SecurityService>();
-
-            services.AddScoped<ISpotifyService, SpotifyService>();
-            
-            services.AddScoped<IBPUnitOfWork, BPUnitOfWork>();
+            DependencyInjection(services);
 
             //services.AddAuthentication(authOptions => 
             //{
@@ -66,6 +61,16 @@ namespace API
 
             services.AddDbContext<BPContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Database")));
+        }
+
+        private void DependencyInjection(IServiceCollection services)
+        {
+            // Services
+            services.AddScoped<ISecurityService, SecurityService>();
+            services.AddScoped<IWeightingService, WeightingService>();
+            services.AddScoped<ISpotifyService, SpotifyService>();
+            // Unit of work
+            services.AddScoped<IBPUnitOfWork, BPUnitOfWork>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
